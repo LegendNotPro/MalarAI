@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    .instructions {
+      color: blue;
+      font-size: 16px;
+      font-family: Arial;
+    }
+
+
+    body {
+      background-color: white;
+    }
+
+    h1 {
+      color: blue
+    }
+
+    h2 {
+      color: blue;
+    }
+
+    .predict {
+      background-color: blue; 
+      border: none;
+      color: white;
+      padding: 30px 60px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .
+    img {
+      visibility: "hidden"
+    }
+
+    input[type="file"]::file-selector-button {
+      border-radius: 4px;
+      padding: 0 16px;
+      height: 40px;
+      color: blue;
+      cursor: pointer;
+      background-color: white;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+      margin-right: 16px;
+      transition: background-color 200ms;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}
+    
+  </style>
+  <head>
+    <title>Malaria AI Model </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <center>
+    <h1>MalarAI </h1>
+    <h2>Powered by TensorFlow, Keras and Flask
+    </center>
+     </head>
+  <body>
+    <center>
+    <p class="instructions", style="color: black">This AI helps doctors diagnose malaria quickly using a Convoluted Neural Network (CNN) built from a Keras Sequential model which was trained with over 27000 images of RBCs taken from sample patients. The predict button takes images uploaded from your computer and predicts if they cells are infected or not.</p>
+    <input type="file" id="myFile" name="filename">
+    <br>
+    <br>
+    <button class="predict" onclick="get_predictions()">Predict
+    </center>
+    <br>
+    <br>
+    <br>
+    <img src="#", width=150, height=150 id="img1", alt="Loading...", style="visibility: hidden">
+    <img src="#", width=150, height=150, id="img2", alt="Loading...", style="margin-left: 120px; visibility: hidden">
+    <img src="#", width=150, height=150 id="img3", alt="Loading...", style="margin-left: 240px; visibility: hidden">
+    <img src="#", width=150, height=150, id="img4", alt="Loading...",  style="margin-left: 300px; visibility: hidden">
+
+    <br>
+    <br>
+    <br>
+
+    <p class="instructions" id="label1" style="display: inline-block; font-size: 14px; visibility: hidden"><b>Predicted: Loading...</b></p>
+    <p class="instructions" id="label2" style="margin-left: 120px; display: inline-block; font-size: 14px; visibility: hidden"><b>Predicted: Loading...</b></p>
+    <p class="instructions" id="label3" style="margin-left: 220px; display: inline-block; font-size: 14px; visibility: hidden"><b>Predicted: Loading...</b></p>
+    <p class="instructions" id="label4" style="margin-left: 300px; display: inline-block; font-size: 14px; visibility: hidden"><b>Predicted: Loading...</b></p>
+    
+    <script>
+      var url = window.location.href
+      function get_predictions() {
+      
+        const xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onload = function() {
+          console.log(this.responseText)
+          const data = JSON.parse(this.responseText);
+          var img_arr = data["data"];
+          
+
+          for (var i = 0; i < img_arr.length; i++) {
+            if (i === 0) {
+              img1.src = img_arr[i][0]
+              label1.innerHTML = "<b>Predicted: "+img_arr[i][2]+"</b>"
+            } else if (i === 1) {
+              img2.src = img_arr[i][0]
+              label2.innerHTML = "<b>Predicted: "+img_arr[i][2]+"</b>"
+            } else if (i === 2) {
+              img3.src = img_arr[i][0]
+              label3.innerHTML = "<b>Predicted: "+img_arr[i][2]+"</b>"
+            } else if (i === 3) {
+              img4.src = img_arr[i][0]
+              label4.innerHTML = "<b>Predicted: "+img_arr[i][2]+"</b>"
+            }
+          }
+        }
+        xmlhttp.open("GET", url+"predict");
+        xmlhttp.send();
+
+        var img1 = document.getElementById("img1")
+        var img2 = document.getElementById("img2")
+        var img3 = document.getElementById("img3")
+        var img4 = document.getElementById("img4")
+
+        var label1 = document.getElementById("label1")
+        var label2 = document.getElementById("label2")
+        var label3 = document.getElementById("label3")
+        var label4 = document.getElementById("label4")
+
+        img1.style.visibility = "visible"
+        img2.style.visibility = "visible"
+        img3.style.visibility = "visible"
+        img4.style.visibility = "visible"
+
+        label1.style.visibility = "visible"
+        label2.style.visibility = "visible"
+        label3.style.visibility = "visible"
+        label4.style.visibility = "visible"
+
+        label1.style.fontSize = "16px"
+        label2.style.fontSize = "16px"
+        label3.style.fontSize = "16px"
+        label4.style.fontSize = "16px"
+      }
+    </script>
+  </body>
+  
+</html>
