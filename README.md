@@ -23,3 +23,5 @@ Adjust the filepath for the model that you save and load.
 
 
 If any problems occur while running, mail us!
+Use this google colab link to view and run the code:
+https://colab.research.google.com/drive/1ISm-1GnP9tdfLQq1ohr4xZtNcSlDgfEf#scrollTo=A9Nqbh4nlKKF
